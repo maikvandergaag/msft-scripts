@@ -1,6 +1,6 @@
-﻿###################################################################################
+###################################################################################
 ##
-## PowerShell script for exporting Azure Resources wihtin a subscription.
+## PowerShell script for exporting Azure Resources within a subscription.
 ## Creator: Maik van der Gaag
 ##
 ###################################################################################
