@@ -61,30 +61,6 @@ function Publish-Packages {
     }
 }
 
-# Function to update package information
-function Update-PackageInfo {
-    param (
-        [string]$feed,
-        [string]$packageName,
-        [string]$packageVersion,
-        [string]$newDescription,
-        [string[]]$newTags
-    )
-
-    $url = "https://feeds.dev.azure.com/$organization/$project/_apis/packaging/feeds/$feed/pypi/packages/$packageName/versions/$packageVersion?api-version=6.0-preview.1"
-    $body = @{
-        description = $newDescription
-        tags = $newTags
-    } | ConvertTo-Json
-
-    try {
-        $response = Invoke-RestMethod -Uri $url -Method Patch -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo); "Content-Type"="application/json"} -Body $body
-        Write-Output "Package information updated successfully: $($response | ConvertTo-Json -Depth 10)"
-    } catch {
-        Write-Error "Failed to update package information for $packageName version $packageVersion. Error: $_"
-    }
-}
-
 # Main script execution
 Get-PackagesFiles -feed $sourceFeed -destinationFolder $localFolder
 Publish-Packages -sourceFolder $localFolder -destination $destinationFeed
